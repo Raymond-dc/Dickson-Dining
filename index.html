@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dickson Dining | Fresh Local & Continental Dishes</title>
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        /* Header & Hero */
+        header {
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .hero-content {
+            max-width: 700px;
+            margin: auto;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-grid {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        .about-grid p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Menu Section with Pictures */
+        .menu-category {
+            margin-bottom: 3.5rem;
+        }
+        .menu-category h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .menu-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .menu-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+        .menu-card-content {
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        /* Hours & Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .info-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+        .info-card ul {
+            list-style: none;
+        }
+        .info-card li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.4rem;
+        }
+
+        /* Reviews Section */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .review-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .review-card p {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .reviewer {
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Map Section */
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 350px;
+            border: 0;
+        }
+
+        /* Reservation Form */
+        .reservation-form {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6);
+            color: #fff;
+            font-size: 1rem;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.85rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: #090d16;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Hero -->
+    <header>
+        <nav>
+            <div class="logo">Dickson Dining</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#hours">Hours & Location</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#reserve">Reserve</a></li>
+            </ul>
+        </nav>
+        <div class="hero-content">
+            <h1>Welcome to <span>Dickson Dining</span></h1>
+            <p>Where great food meets a warm and welcoming atmosphere. Freshly prepared local and continental dishes made for memorable moments.</p>
+            <div class="cta-buttons">
+                <a href="#menu" class="btn">View Menu</a>
+                <a href="#reserve" class="btn btn-outline">Book a Table</a>
+                <a href="tel:+2348000000000" class="btn" style="background: #22c55e; color: #fff;">📞 Call Us</a>
+                <a href="https://wa.me/2348000000000?text=Hello%20Dickson%20Dining,%20I%20would%20like%20to..." target="_blank" class="btn" style="background: #25d366; color: #fff;">💬 WhatsApp Us</a>
+            </div>
+        </div>
+        <div></div>
+    </header>
+
+    <!-- About Us -->
+    <section id="about" class="container">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-grid">
+            <p>Welcome to Dickson Dining, where great food meets a warm and welcoming atmosphere. We serve freshly prepared local and continental dishes using quality ingredients. Whether you’re joining us for lunch, dinner, or a special occasion, we’re here to make every meal memorable.</p>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="container">
+        <h2 class="section-title">Our Menu</h2>
+
+        <!-- Appetizers -->
+        <div class="menu-category">
+            <h3>🍗 Appetizers</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=500&q=80" alt="Chicken Wings">
+                    <div class="menu-card-content"><span class="item-name">Chicken Wings</span><span class="item-price">₦5,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1606787366850-de63301c7bfc?auto=format&fit=crop&w=500&q=80" alt="Spring Rolls">
+                    <div class="menu-card-content"><span class="item-name">Spring Rolls</span><span class="item-price">₦3,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80" alt="Samosa">
+                    <div class="menu-card-content"><span class="item-name">Samosa</span><span class="item-price">₦3,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=500&q=80" alt="Pepper Soup">
+                    <div class="menu-card-content"><span class="item-name">Pepper Soup</span><span class="item-price">₦4,500</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dishes -->
+        <div class="menu-category">
+            <h3>🍛 Main Dishes</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=500&q=80" alt="Jollof Rice & Chicken">
+                    <div class="menu-card-content"><span class="item-name">Jollof Rice & Chicken</span><span class="item-price">₦5,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=80" alt="Fried Rice & Chicken">
+                    <div class="menu-card-content"><span class="item-name">Fried Rice & Chicken</span><span class="item-price">₦6,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=500&q=80" alt="Grilled Chicken & Chips">
+                    <div class="menu-card-content"><span class="item-name">Grilled Chicken & Chips</span><span class="item-price">₦7,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1621996346565-e3d5d6281229?auto=format&fit=crop&w=500&q=80" alt="Spaghetti Bolognese">
+                    <div class="menu-card-content"><span class="item-name">Spaghetti Bolognese</span><span class="item-price">₦6,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=500&q=80" alt="Seafood Pasta">
+                    <div class="menu-card-content"><span class="item-name">Seafood Pasta</span><span class="item-price">₦8,500</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Burgers & Fast Food -->
+        <div class="menu-category">
+            <h3>🍔 Burgers & Fast Food</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Classic Beef Burger">
+                    <div class="menu-card-content"><span class="item-name">Classic Beef Burger</span><span class="item-price">₦6,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80" alt="Chicken Burger">
+                    <div class="menu-card-content"><span class="item-name">Chicken Burger</span><span class="item-price">₦6,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80" alt="Shawarma">
+                    <div class="menu-card-content"><span class="item-name">Shawarma</span><span class="item-price">₦4,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=80" alt="Chicken & Chips">
+                    <div class="menu-card-content"><span class="item-name">Chicken & Chips</span><span class="item-price">₦5,500</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drinks -->
+        <div class="menu-category">
+            <h3>🥤 Drinks</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80" alt="Coca-Cola">
+                    <div class="menu-card-content"><span class="item-name">Coca-Cola</span><span class="item-price">₦1,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80" alt="Fanta">
+                    <div class="menu-card-content"><span class="item-name">Fanta</span><span class="item-price">₦1,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80" alt="Bottled Water">
+                    <div class="menu-card-content"><span class="item-name">Bottled Water</span><span class="item-price">₦500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80" alt="Fresh Juice">
+                    <div class="menu-card-content"><span class="item-name">Fresh Juice</span><span class="item-price">₦2,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=500&q=80" alt="Smoothie">
+                    <div class="menu-card-content"><span class="item-name">Smoothie</span><span class="item-price">₦3,500</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desserts -->
+        <div class="menu-category">
+            <h3>🍰 Desserts</h3>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80" alt="Chocolate Cake">
+                    <div class="menu-card-content"><span class="item-name">Chocolate Cake</span><span class="item-price">₦3,000</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=500&q=80" alt="Ice Cream">
+                    <div class="menu-card-content"><span class="item-name">Ice Cream</span><span class="item-price">₦2,500</span></div>
+                </div>
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=500&q=80" alt="Fruit Salad">
+                    <div class="menu-card-content"><span class="item-name">Fruit Salad</span><span class="item-price">₦2,000</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours & Location Section -->
+    <section id="hours" class="container">
+        <h2 class="section-title">Hours & Location</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🕐 Operating Hours</h3>
+                <ul>
+                    <li><span>Monday – Friday:</span> <strong>10:00 AM – 10:00 PM</strong></li>
+                    <li><span>Saturday:</span> <strong>10:00 AM – 11:00 PM</strong></li>
+                    <li><span>Sunday:</span> <strong>12:00 PM – 9:00 PM</strong></li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3>📍 Visit Us</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">12 Allen Avenue, Ikeja, Lagos</p>
+                <div style="margin-top: 1rem;">
+                    <a href="https://maps.google.com/?q=12+Allen+Avenue,+Ikeja,+Lagos" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">🗺️ Get Directions</a>
+                </div>
+            </div>
+        </div>
+        <div class="map-container" style="margin-top: 2rem;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.394876798436!2d3.3556!3d6.5965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b922c0695123d%3A0x6b8bc2103f6f3a6!2sAllen%20Ave%2C%20Ikeja%2C%20Lagos!5e0!3m2!1sen!2sng!4v1620000000000!5m2!1sen!2sng" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section id="reviews" class="container">
+        <h2 class="section-title">Customer Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>“The food was amazing and the service was excellent. Definitely coming back!”</p>
+                </div>
+                <div class="reviewer">— David A.</div>
+            </div>
+            <div class="review-card">
+                <div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>“Beautiful environment, delicious food, and very friendly staff.”</p>
+                </div>
+                <div class="reviewer">— Sarah O.</div>
+            </div>
+            <div class="review-card">
+                <div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>“Best Jollof rice and grilled chicken in Ikeja! Highly recommended.”</p>
+                </div>
+                <div class="reviewer">— Tunde M.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table Reservation -->
+    <section id="reserve" class="container">
+        <h2 class="section-title">Reserve a Table</h2>
+        <div class="reservation-form">
+            <form onsubmit="event.preventDefault(); alert('Thank you! Your table reservation request has been submitted successfully.');">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required placeholder="Enter your phone number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <select id="guests" required>
+                        <option value="">Select guests</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="4">4 People</option>
+                        <option value="6">6 People</option>
+                        <option value="8+">8+ People</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="request">Special Request (Optional)</label>
+                    <textarea id="request" rows="3" placeholder="Any dietary requirements or special setups?"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Reserve Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Dickson Dining. All rights reserved. | 12 Allen Avenue, Ikeja, Lagos</p>
+    </footer>
+
+</body>
+</html>
